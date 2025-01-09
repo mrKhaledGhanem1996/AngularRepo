@@ -1,0 +1,65 @@
+<div class="container mt-5">
+    <h2 class="mt-5 alert alert-primary text-center">Edit Product</h2>
+    <form #productForm="ngForm" (submit)="updateProduct(productForm)">
+      <div class="mb-3">
+        <label for="name" class="form-label">Product Name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          class="form-control"
+          [(ngModel)]="product.name"
+          #nameInput="ngModel" 
+          required
+         
+        />
+        <div *ngIf="nameInput.invalid && nameInput.touched" class="text-danger">
+          Product name is required.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="price" class="form-label">Price</label>
+        <input
+          type="number"
+          id="price"
+          name="price"
+          class="form-control"
+          [(ngModel)]="product.price"
+          required
+          min="0"
+          #priceInput="ngModel"
+        />
+        <div *ngIf="priceInput.invalid && priceInput.touched && (!product.price || product.price < 0)" class="text-danger">
+          Price is required and must be a positive value.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        <select
+          id="category"
+          name="categoryId"
+          class="form-select"
+          [(ngModel)]="product.categoryId"
+          required
+        >
+          <option value="">Select Category</option>
+          <option *ngFor="let category of categories" [value]="category.id">
+            {{ category.name }}
+          </option>
+        </select>
+        <div *ngIf="productForm.submitted && !product.categoryId" class="text-danger">
+          Selecting a category is required.
+        </div>
+      </div>
+  
+      <button type="submit" class="btn btn-success me-3">
+        Update Product
+      </button>
+      <button type="button" class="btn btn-dark" routerLink="/products">
+        Cancel
+      </button>
+    </form>
+  </div>
+  

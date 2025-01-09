@@ -1,0 +1,17 @@
+<br><br>
+<div class="container mt-5">
+    <h2 class="mt-5 alert alert-primary text-center">Edit New Category</h2>
+    <form #categoryForm="ngForm" (ngSubmit)="updateCategory(categoryForm)">
+      <div class="mb-3">
+        <label for="categoryName" class="form-label">Category Name</label>
+        <input type="text" id="name" class="form-control" [(ngModel)]="category.name" 
+          #nameInput="ngModel" name="name" required>
+        <div *ngIf="nameInput.invalid && nameInput.touched" class="text-danger">
+          Category name is required.
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success me-3">Edit Category</button>
+      <button class="btn btn-default" routerLink="/categories">Cancel</button>
+    </form>
+  </div>
+  

@@ -1,0 +1,77 @@
+<br><br>
+<div class="container mt-5">
+  <h2 class="mt-5 alert alert-primary text-center">Category List</h2>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="mb-3">
+        <a class="btn btn-primary" routerLink="/categories/add">Add New Category</a>
+      </div>
+      
+    </div>
+    <div class="col-md-8">
+        <!-- Pagination -->
+         <div class="row">
+          <div class="col-md-4">
+            <nav>
+              <ul class="pagination justify-content-end">
+                <li class="page-item" [class.disabled]="currentPage === 1">
+                  <button class="page-link" (click)="onPageChange(currentPage - 1)">Previous</button>
+                </li>
+            
+                <li *ngFor="let page of [].constructor(totalPages); let i = index" 
+                    class="page-item" [class.active]="currentPage === (i + 1)">
+                  <button class="page-link" (click)="onPageChange(i + 1)">{{ i + 1 }}</button>
+                </li>
+            
+                <li class="page-item" [class.disabled]="currentPage === totalPages">
+                  <button class="page-link" (click)="onPageChange(currentPage + 1)">Next</button>
+                </li>
+              </ul>
+            </nav>
+    
+          </div>
+          <div class="col-md-4">
+            <label>Show </label>
+            <select id="pageSize" class="form-select d-inline-block w-auto" [(ngModel)]="pageSize"
+             (change)="updatePageSize()">
+              <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+            </select>
+            <label> Entities</label>
+          </div>
+          <div class="col md-4">
+            <input type="text" class="form-control" placeholder="Search by name..." [(ngModel)]="searchTerm" 
+            (input)="filterCategories()">
+          </div>
+         </div>
+       
+      
+    </div>
+  </div>
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th style="width: 10%;">#</th>
+        <th style="width: 50%;">Name</th>
+        <th style="width: 40%; text-align: center;" colspan="2">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let category of paginatedCategories">
+        <td>{{ category.id }}</td>
+        <td>{{ category.name }}</td>
+        <td style="text-align: center;">
+          <i class="fa-solid fa-pen" [routerLink]="['/categories/edit', category.id]"
+            style="cursor: pointer; color: #007bff;"></i>
+        </td>
+        <td style="text-align: center;">
+          <i class="fa-regular fa-trash-can" (click)="deleteCategory(category.id)"
+            style="cursor: pointer; color: #dc3545; margin-left: 10px;"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+
+
+</div>
